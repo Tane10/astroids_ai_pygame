@@ -40,8 +40,8 @@ class Game:
         while True:
             self.screen.fill('aqua')
             self.screen.blit(player.texture, player.pos)
-            input_handler(player.move)
-            move_entity(player.move, player.pos, player.speed )
+            input_handler(player.inputs)
+            move_entity(player.inputs, player.pos, player.speed )
 
             pygame.display.update()
             self.clock.tick(60)
