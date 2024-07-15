@@ -30,6 +30,9 @@ def input_handler(input_dict) -> None:
                 case pygame.K_s:
                     input_dict['down'] = True
                     break
+                case pygame.K_SPACE:
+                    input_dict['fire'] = True
+                    break
         if event.type == pygame.KEYUP:
             match event.key:
                 case pygame.K_d:
@@ -43,6 +46,9 @@ def input_handler(input_dict) -> None:
                     break
                 case pygame.K_s:
                     input_dict['down'] = False
+                    break
+                case pygame.K_SPACE:
+                    input_dict['fire'] = False
                     break
 
 

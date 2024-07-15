@@ -35,13 +35,16 @@ class Game:
 
     def run(self) -> None:
         self.__load_assets()
-        player = Player(self.assets_dict)
+        player = Player(self.assets_dict, self.screen)
 
         while True:
-            self.screen.fill('aqua')
+            self.screen.fill('black')
+
             self.screen.blit(player.texture, player.pos)
             input_handler(player.inputs)
             move_entity(player.inputs, player.pos, player.speed )
+
+            player.handle_logic()
 
             pygame.display.update()
             self.clock.tick(60)
