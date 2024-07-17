@@ -1,5 +1,5 @@
 import pygame
-import logging
+import globals
 
 from input_handler import input_handler, move_entity
 from player import Player
@@ -19,23 +19,21 @@ class Game:
     assets_dict = load_assets()
 
     def __init__(self) -> None:
-        self.SCREEN_WIDTH = 1280
-        self.SCREEN_HEIGHT = 720
         pygame.init()
         pygame.display.set_caption("Astroids")
 
         self.clock = pygame.time.Clock()
-        self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
+        self.screen = pygame.display.set_mode((globals.SCREEN_WIDTH, globals.SCREEN_HEIGHT))
 
     def run(self) -> None:
         player = Player()
 
         while True:
             self.screen.fill('black')
-
             self.screen.blit(player.texture, player.pos)
+
             input_handler(player.inputs)
-            move_entity(player.inputs, player.pos, player.speed)
+            move_entity(player)
 
             # # player.handle_logic()
             # logging.debug('Debug message: Game is running')

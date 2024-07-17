@@ -1,8 +1,11 @@
 import pygame
 import sys
+import globals
+
+from player import Player
 
 
-def input_handler(input_dict) -> None:
+def input_handler(input_dict: dict[str,bool]) -> None:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
              pygame.quit()
@@ -10,11 +13,7 @@ def input_handler(input_dict) -> None:
 
         if event.type == pygame.KEYDOWN:
             match event.key:
-                case pygame.K_q:
-                    pygame.quit()
-                    sys.exit(0)
-
-                case pygame.K_ESCAPE:
+                case pygame.K_q | pygame.K_ESCAPE:
                     pygame.quit()
                     sys.exit(0)
 
@@ -51,13 +50,24 @@ def input_handler(input_dict) -> None:
                     input_dict['fire'] = False
                     break
 
+def move_entity(entity: Player) -> None:
+    # Moving entity
+    if entity.inputs['left']:
+        entity.pos[0] -= entity.speed
+    if entity.inputs['right']:
+        entity.pos[0] += entity.speed
+    if entity.inputs['up']:
+        entity.pos[1] -= entity.speed
+    if entity.inputs['down']:
+        entity.pos[1] += entity.speed
 
-def move_entity(input_dict, position,speed) -> None:
-    if input_dict['left']:
-        position[0] -= speed
-    if input_dict['right']:
-        position[0] += speed
-    if input_dict['up']:
-        position[1] -= speed
-    if input_dict['down']:
-        position[1] += speed
+
+    # Boundary check and position correction
+    if entity.pos.x < 0:
+        entity.pos.x = 0
+    if entity.pos.x + entity.rect.width > globals.SCREEN_WIDTH:
+        entity.pos.x = globals.SCREEN_WIDTH - entity.rect.width
+    if entity.pos.y < 0:
+        entity.pos.y = 0
+    if entity.pos.y + entity.rect.height > globals.SCREEN_HEIGHT:
+        entity.pos.y = globals.SCREEN_HEIGHT - entity.rect.height
