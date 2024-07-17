@@ -1,8 +1,9 @@
 import pygame
-import os
+import logging
 
 from input_handler import input_handler, move_entity
 from player import Player
+from assets_loader import load_assets
 # '''
 # - [X] import textures
 # - get basic movement
@@ -15,6 +16,8 @@ from player import Player
 
 
 class Game:
+    assets_dict = load_assets()
+
     def __init__(self) -> None:
         self.SCREEN_WIDTH = 1280
         self.SCREEN_HEIGHT = 720
@@ -23,28 +26,21 @@ class Game:
 
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
-        self.assets_dict = {}
-
-    def __load_assets(self):
-        folder_path = os.path.join(os.path.dirname(__file__), '..', 'assets')
-        for filename in os.listdir(folder_path):
-            if filename.endswith('.png'):
-                texture_path = os.path.join(folder_path,filename)
-                texture = pygame.image.load(texture_path)
-                self.assets_dict[filename] = texture
 
     def run(self) -> None:
-        self.__load_assets()
-        player = Player(self.assets_dict, self.screen)
+        player = Player()
 
         while True:
             self.screen.fill('black')
 
             self.screen.blit(player.texture, player.pos)
             input_handler(player.inputs)
-            move_entity(player.inputs, player.pos, player.speed )
+            move_entity(player.inputs, player.pos, player.speed)
 
-            player.handle_logic()
+            # # player.handle_logic()
+            # logging.debug('Debug message: Game is running')
+            # logging.info('Info message: Game is processing events')
+            # logging.warning('Warning message: Something might be wrong')
 
             pygame.display.update()
             self.clock.tick(60)
