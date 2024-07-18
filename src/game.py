@@ -1,7 +1,8 @@
 import pygame
-import globals
+import constant
 
 from input_handler import input_handler, move_entity
+from enemies import Enemies
 from player import Player
 from assets_loader import load_assets
 # '''
@@ -23,22 +24,22 @@ class Game:
         pygame.display.set_caption("Astroids")
 
         self.clock = pygame.time.Clock()
-        self.screen = pygame.display.set_mode((globals.SCREEN_WIDTH, globals.SCREEN_HEIGHT))
+        self.screen = pygame.display.set_mode((constant.SCREEN_WIDTH, constant.SCREEN_HEIGHT))
 
     def run(self) -> None:
-        player = Player()
+        player = Player(self.screen)
+        enemies = Enemies(self.screen)
 
         while True:
-            self.screen.fill('black')
+            self.screen.fill('cadetblue')
             self.screen.blit(player.texture, player.pos)
+
 
             input_handler(player.inputs)
             move_entity(player)
 
-            # # player.handle_logic()
-            # logging.debug('Debug message: Game is running')
-            # logging.info('Info message: Game is processing events')
-            # logging.warning('Warning message: Something might be wrong')
+            player.logic_handler()
+            enemies.logic_handler()
 
             pygame.display.update()
             self.clock.tick(60)

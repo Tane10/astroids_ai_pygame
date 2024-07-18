@@ -1,6 +1,6 @@
 import pygame
 import sys
-import globals
+import constant
 
 from player import Player
 
@@ -65,9 +65,9 @@ def move_entity(entity: Player) -> None:
     # Boundary check and position correction
     if entity.pos.x < 0:
         entity.pos.x = 0
-    if entity.pos.x + entity.rect.width > globals.SCREEN_WIDTH:
-        entity.pos.x = globals.SCREEN_WIDTH - entity.rect.width
+    if entity.pos.x + entity.rect.width > constant.SCREEN_WIDTH:
+        entity.pos.x = constant.SCREEN_WIDTH - entity.rect.width
     if entity.pos.y < 0:
         entity.pos.y = 0
-    if entity.pos.y + entity.rect.height > globals.SCREEN_HEIGHT:
-        entity.pos.y = globals.SCREEN_HEIGHT - entity.rect.height
+    if entity.pos.y + entity.rect.height > constant.SCREEN_HEIGHT:
+        entity.pos.y = constant.SCREEN_HEIGHT - entity.rect.height
